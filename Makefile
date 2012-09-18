@@ -15,7 +15,7 @@ env:
 	fi;\
 	virtualenv --python=$$PYTHON_EXE --no-site-packages env
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-		uwsgi django flask
+		"uwsgi>=1.2.6" "django>=1.4.1" "flask>=0.9"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
