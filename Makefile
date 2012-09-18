@@ -1,5 +1,5 @@
-.SILENT: clean env django flask pyramid webpy
-.PHONY: clean env django flask pyramid webpy
+.SILENT: clean env django flask pyramid webpy bottle
+.PHONY: clean env django flask pyramid webpy bottle
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -16,7 +16,7 @@ env:
 	virtualenv --python=$$PYTHON_EXE --no-site-packages env
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		"uwsgi>=1.2.6" "django>=1.4.1" "flask>=0.9" \
-		"pyramid>=1.4a1" "web.py>=0.37"
+		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -33,3 +33,6 @@ pyramid:
 
 webpy:
 	$(ENV)/bin/uwsgi --ini web.py/uwsgi.ini
+
+bottle:
+	$(ENV)/bin/uwsgi --ini bottle/uwsgi.ini
