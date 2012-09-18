@@ -1,5 +1,5 @@
-.SILENT: clean env django
-.PHONY: clean env django
+.SILENT: clean env django flask
+.PHONY: clean env django flask
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -15,7 +15,7 @@ env:
 	fi;\
 	virtualenv --python=$$PYTHON_EXE --no-site-packages env
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-		uwsgi django
+		uwsgi django flask
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -23,3 +23,6 @@ clean:
 
 django:
 	$(ENV)/bin/uwsgi --ini django/uwsgi.ini
+
+flask:
+	$(ENV)/bin/uwsgi --ini flask/uwsgi.ini
