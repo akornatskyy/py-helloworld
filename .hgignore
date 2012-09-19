@@ -1,4 +1,5 @@
 syntax: glob
 env/
+pypy*/
 *.pyc
 *.pyo
