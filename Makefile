@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -17,16 +17,25 @@ env:
 		    PYTHON_EXE=/usr/bin/python$(VERSION); \
 	fi; \
 	virtualenv --python=$$PYTHON_EXE --no-site-packages env
+
+	if [ ! -f web2py_src.zip ]; then \
+		wget http://www.web2py.com/examples/static/web2py_src.zip; \
+	fi; \
+	rm -rf web2py/web2py ; unzip -qo web2py_src.zip -d web2py/ ; \
+	rm -rf web2py/web2py/applications ; \
+	mkdir -p web2py/web2py/applications/welcome/controllers
+	ln -s `pwd`/web2py/default.py `pwd`/web2py/web2py/applications/welcome/controllers/default.py
+
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292"
+		"wheezy.web>=0.1.292" "tornado>=2.4"; \
 
 pypy:
-	if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
-		wget https://bitbucket.org/pypy/pypy/downloads/$(PYPY)-linux64.tar.bz2; \
-	fi; \
-	tar xjf $(PYPY)-linux64.tar.bz2; \
+	#if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
+	#	wget https://bitbucket.org/pypy/pypy/downloads/$(PYPY)-linux64.tar.bz2; \
+	#fi;
+	#tar xjf $(PYPY)-linux64.tar.bz2;
 	wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz; \
 	tar xzf setuptools-0.6c11.tar.gz ; \
 	cd setuptools-0.6c11 ; \
@@ -36,7 +45,7 @@ pypy:
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
 		"gunicorn>=0.14.6" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292"
+		"wheezy.web>=0.1.292" "tornado>=2.4"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -87,4 +96,19 @@ ifeq ($(SERVER),uwsgi)
 else
 	export PYTHONPATH=$$PYTHONPATH:wheezy.web ; \
 	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+tornado:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini tornado/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:tornado ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+web2py:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini web2py/uwsgi.ini
+else
+	echo "Not available"
 endif
