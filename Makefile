@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -29,7 +29,7 @@ env:
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4"
+		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0"
 
 pypy:
 	if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
@@ -45,7 +45,7 @@ pypy:
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
 		"gunicorn>=0.14.6" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4"
+		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -111,4 +111,12 @@ ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini web2py/uwsgi.ini
 else
 	$(ENV)/bin/pypy web2py/web2py/anyserver.py -s gunicorn -i 0.0.0.0 -p 8080 -l
+endif
+
+bobo:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini bobo/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:bobo ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
 endif
