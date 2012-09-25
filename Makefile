@@ -29,8 +29,7 @@ env:
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4" && \
-		./pip-$(VERSION) install web2py
+		"wheezy.web>=0.1.292" "tornado>=2.4"
 
 pypy:
 	if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
@@ -111,5 +110,5 @@ web2py:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini web2py/uwsgi.ini
 else
-	echo "Not available"
+	$(ENV)/bin/pypy web2py/web2py/anyserver.py -s gunicorn -i 0.0.0.0 -p 8080 -l
 endif
