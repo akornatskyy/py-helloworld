@@ -32,10 +32,10 @@ env:
 		"wheezy.web>=0.1.292" "tornado>=2.4"; \
 
 pypy:
-	#if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
-	#	wget https://bitbucket.org/pypy/pypy/downloads/$(PYPY)-linux64.tar.bz2; \
-	#fi;
-	#tar xjf $(PYPY)-linux64.tar.bz2;
+	if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
+		wget https://bitbucket.org/pypy/pypy/downloads/$(PYPY)-linux64.tar.bz2; \
+	fi; \
+	tar xjf $(PYPY)-linux64.tar.bz2; \
 	wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz; \
 	tar xzf setuptools-0.6c11.tar.gz ; \
 	cd setuptools-0.6c11 ; \
