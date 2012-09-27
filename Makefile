@@ -56,7 +56,8 @@ django:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini django/uwsgi.ini
 else
-	echo "Not available"
+	export PYTHONPATH=$$PYTHONPATH:django; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 helloworld.wsgi:application
 endif
 
 flask:
