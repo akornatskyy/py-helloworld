@@ -112,7 +112,8 @@ web2py:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini web2py/uwsgi.ini
 else
-	$(ENV)/bin/pypy web2py/web2py/anyserver.py -s gunicorn -i 0.0.0.0 -p 8080 -l
+	export PYTHONPATH=$$PYTHONPATH:web2py/web2py ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 wsgihandler:application
 endif
 
 bobo:
