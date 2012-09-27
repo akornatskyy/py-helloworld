@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -29,7 +29,7 @@ env:
 	cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0"
+		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0" "cherrypy>=3.2.2"
 
 pypy:
 	if [ ! -f $(PYPY)-linux64.tar.bz2 ]; then \
@@ -45,7 +45,8 @@ pypy:
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
 		"gunicorn>=0.14.6" "flask>=0.9" \
 		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0"
+		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0" "cherrypy>=3.2.2"
+
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -118,5 +119,13 @@ ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini bobo/uwsgi.ini
 else
 	export PYTHONPATH=$$PYTHONPATH:bobo ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+cherrypy:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini cherrypy/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:cherrypy ; \
 	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
 endif
