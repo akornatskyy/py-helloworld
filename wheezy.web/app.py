@@ -1,3 +1,5 @@
+import warnings
+
 from wheezy.http import HTTPResponse
 from wheezy.http import WSGIApplication
 from wheezy.routing import url
@@ -14,15 +16,23 @@ class WelcomeHandler(BaseHandler):
         return response
 
 
+def welcome(request):
+    response = HTTPResponse()
+    response.write('Hello World!')
+    return response
+
+
+
 all_urls = [
-        url('welcome', WelcomeHandler, name='default'),
+        url('welcome', WelcomeHandler),
+        #url('welcome', welcome),
 ]
 
-options = {}
+warnings.simplefilter('ignore')
 main = WSGIApplication(
     middleware=[
         bootstrap_defaults(url_mapping=all_urls),
         path_routing_middleware_factory
     ],
-    options=options
+    options={}
 )
