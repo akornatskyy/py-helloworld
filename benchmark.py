@@ -48,16 +48,19 @@ def start_response(status, headers):
 def run(number=10000):
     print("             ttime  tcalls  funcs")
     for framework in ['bobo', 'bottle', 'cherrypy', 'flask', 'pyramid',
-                      'tornado', 'wheezy.web']:
+                      'tornado', 'wheezy.web', 'wsgi']:
         sys.path[0] = framework
-        main = __import__('app', None, None, ['main']).main
-        time = timeit(lambda: main(environ.copy(), start_response),
-                number=number)
-        st = Stats(profile.Profile().runctx(
-            'main(environ.copy(), start_response)', globals(), locals()))
-        print("%-10s %7.3f %7d %6d" % (framework, time,
-            st.total_calls, len(st.stats)))
-        del sys.modules['app']
+        try:
+            main = __import__('app', None, None, ['main']).main
+            time = timeit(lambda: main(environ.copy(), start_response),
+                    number=number)
+            st = Stats(profile.Profile().runctx(
+                'main(environ.copy(), start_response)', globals(), locals()))
+            print("%-10s %7.3f %7d %6d" % (framework, time,
+                st.total_calls, len(st.stats)))
+            del sys.modules['app']
+        except ImportError:
+            print("%-15s not installed" % framework)
 
 
 if __name__ == '__main__':
