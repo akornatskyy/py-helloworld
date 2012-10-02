@@ -29,15 +29,15 @@ env:
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 			"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
-			"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-			"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0" \
+			"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
+			"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" \
 			"cherrypy>=3.2.2" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-		   		"uwsgi>=1.3" "pyramid>=1.4a1" "bottle>=0.10.11" \
-				"wheezy.web>=0.1.292" "tornado>=2.4" ; \
+		   		"uwsgi>=1.3" "pyramid>=1.4a2" "bottle>=0.10.11" \
+				"wheezy.web>=0.1.304" "tornado>=2.4" ; \
 	fi
 
 pypy:
