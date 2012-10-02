@@ -9,6 +9,11 @@ from pstats import Stats
 from timeit import timeit
 
 
+if sys.version_info[0] >= 3:
+    b = b''
+else:
+    b = ''
+
 environ = {
         'HTTP_ACCEPT': 'text/html,application/xhtml+xml,application/xml;'
                        'q=0.9,*/*;q=0.8',
@@ -52,10 +57,11 @@ def run(number=100000):
         sys.path[0] = framework
         try:
             main = __import__('app', None, None, ['main']).main
-            time = timeit(lambda: list(main(environ.copy(), start_response)),
-                    number=number)
+            def wrapper():
+                b.join(main(environ.copy(), start_response))
+            time = timeit(wrapper, number=number)
             st = Stats(profile.Profile().runctx(
-                'main(environ.copy(), start_response)', globals(), locals()))
+                'wrapper()', globals(), locals()))
             print("%-10s %7.3f %7d %6d" % (framework, time,
                 st.total_calls, len(st.stats)))
             del sys.modules['app']
