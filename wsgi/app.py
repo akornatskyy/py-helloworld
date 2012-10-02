@@ -15,7 +15,7 @@ def welcome(env, start_response):
         ('Content-Type','text/html'),
         ('Content-Length', '12')
     ])
-    return b('Hello World!')
+    return [b('Hello World!')]
 
 
 def main(env, start_response):
@@ -25,4 +25,4 @@ def main(env, start_response):
         ('Content-Type','text/html'),
         ('Content-Length','0')
     ])
-    return b('')
+    return [b('')]
