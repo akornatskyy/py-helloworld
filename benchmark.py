@@ -45,7 +45,7 @@ def start_response(status, headers):
     return None
 
 
-def run(number=10000):
+def run(number=100000):
     print("             ttime  tcalls  funcs")
     for framework in ['bobo', 'bottle', 'cherrypy', 'flask', 'pyramid',
                       'tornado', 'wheezy.web', 'wsgi']:
