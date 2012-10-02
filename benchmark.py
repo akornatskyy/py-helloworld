@@ -2,6 +2,7 @@
 """
 """
 
+import os
 import profile
 import sys
 
@@ -51,10 +52,12 @@ def start_response(status, headers):
 
 
 def run(number=100000):
+    sys.path[0] = '.'
+    path = os.getcwd()
     print("             ttime  tcalls  funcs")
-    for framework in ['bobo', 'bottle', 'cherrypy', 'flask', 'pyramid',
-                      'tornado', 'wheezy.web', 'wsgi']:
-        sys.path[0] = framework
+    for framework in ['bobo', 'bottle', 'cherrypy', 'django', 'flask',
+            'pyramid', 'tornado', 'web.py', 'web2py', 'wheezy.web', 'wsgi']:
+        os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
             def wrapper():
