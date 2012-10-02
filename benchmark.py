@@ -52,7 +52,7 @@ def run(number=100000):
         sys.path[0] = framework
         try:
             main = __import__('app', None, None, ['main']).main
-            time = timeit(lambda: main(environ.copy(), start_response),
+            time = timeit(lambda: list(main(environ.copy(), start_response)),
                     number=number)
             st = Stats(profile.Profile().runctx(
                 'main(environ.copy(), start_response)', globals(), locals()))
