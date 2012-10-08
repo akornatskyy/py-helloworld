@@ -53,8 +53,8 @@ pypy:
 	rm -rf setuptools* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
 		"gunicorn>=0.14.6" "flask>=0.9" \
-		"pyramid>=1.4a1" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.292" "tornado>=2.4" "bobo>=1.0.0" "cherrypy>=3.2.2"
+		"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
+		"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" "cherrypy>=3.2.2"
 
 
 clean:
