@@ -19,7 +19,7 @@ else:
 
 path = os.getcwd()
 
-frameworks = ['django', 'pyramid', 'tornado', 'wheezy.web']
+frameworks = ['django', 'flask', 'pyramid', 'tornado', 'wheezy.web']
 
 def start_response(status, headers):
     return None
