@@ -19,7 +19,7 @@ else:
 
 path = os.getcwd()
 
-frameworks = ['wheezy.web']
+frameworks = ['pyramid', 'wheezy.web']
 
 def start_response(status, headers):
     return None

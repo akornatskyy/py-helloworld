@@ -20,12 +20,12 @@ env:
 
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-			"wheezy.web>=0.1.304" ; \
+			"wheezy.web>=0.1.304" "pyramid>=1.4a2" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-				"wheezy.web>=0.1.304" ; \
+				"wheezy.web>=0.1.304" "pyramid>=1.4a2" ; \
 	fi
 
 pypy:
@@ -42,7 +42,7 @@ pypy:
 	$(PYPY)/bin/pypy distribute_setup.py ; \
 	rm distribute* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
-		"wheezy.web>=0.1.304"
+		"wheezy.web>=0.1.304" "pyramid>=1.4a2"
 
 
 clean:
