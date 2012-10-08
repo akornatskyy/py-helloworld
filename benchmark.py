@@ -46,6 +46,11 @@ environ = {
         'wsgi.version': (1, 0),
 }
 
+frameworks = ['bottle', 'django', 'flask', 'pyramid',
+        'web2py', 'wheezy.web', 'wsgi']
+
+# Frameworks with memory leaks
+frameworks += ('bobo', 'cherrypy', 'tornado', 'web.py')
 
 def start_response(status, headers):
     return None
@@ -55,8 +60,7 @@ def run(number=100000):
     sys.path[0] = '.'
     path = os.getcwd()
     print("             ttime  tcalls  funcs")
-    for framework in ['bobo', 'bottle', 'cherrypy', 'django', 'flask',
-            'pyramid', 'tornado', 'web.py', 'web2py', 'wheezy.web', 'wsgi']:
+    for framework in sorted(frameworks):
         os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
