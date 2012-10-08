@@ -2,6 +2,7 @@ syntax: glob
 env/
 pypy*/
 web2py/web2py/
+distribute*
 *.pyc
 *.pyo
 *.zip
