@@ -46,11 +46,11 @@ environ = {
         'wsgi.version': (1, 0),
 }
 
-frameworks = ['bottle', 'django', 'flask', 'pyramid',
-        'web2py', 'wheezy.web', 'wsgi']
+frameworks = ['bottle', 'pyramid', 'wheezy.web', 'wsgi']
+frameworks += ['django', 'flask', 'web2py']
+frameworks += ['bobo', 'cherrypy', 'tornado', 'web.py']
+frameworks = sorted(frameworks)
 
-# Frameworks with memory leaks
-frameworks += ('bobo', 'cherrypy', 'tornado', 'web.py')
 
 def start_response(status, headers):
     return None
@@ -59,8 +59,8 @@ def start_response(status, headers):
 def run(number=100000):
     sys.path[0] = '.'
     path = os.getcwd()
-    print("             ttime  tcalls  funcs")
-    for framework in sorted(frameworks):
+    print("              msec    rps  tcalls  funcs")
+    for framework in frameworks:
         os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
@@ -69,8 +69,8 @@ def run(number=100000):
             time = timeit(wrapper, number=number)
             st = Stats(profile.Profile().runctx(
                 'wrapper()', globals(), locals()))
-            print("%-10s %7.3f %7d %6d" % (framework, time,
-                st.total_calls, len(st.stats)))
+            print("%-11s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
+                number / time, st.total_calls, len(st.stats)))
             del sys.modules['app']
         except ImportError:
             print("%-15s not installed" % framework)
