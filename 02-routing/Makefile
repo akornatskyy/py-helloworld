@@ -1,5 +1,5 @@
-.SILENT: clean env pypy
-.PHONY: clean env pypy
+.SILENT: clean env pypy web2py
+.PHONY: clean env pypy web2py
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -51,3 +51,18 @@ pypy:
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
 	find ./ -name '*.py[co]' -delete
+
+web2py:
+	if [ ! -f web2py_src.zip ]; then \
+		wget http://www.web2py.com/examples/static/web2py_src.zip; \
+	fi; \
+	rm -rf web2py/web2py ; unzip -qo web2py_src.zip -d web2py/ ; \
+	rm -rf web2py/web2py/applications ; \
+	mkdir -p web2py/web2py/applications/welcome/controllers ;
+	for i in $$(seq 0 9) ; \
+	do \
+		ln -s `pwd`/web2py/default.py \
+			`pwd`/web2py/web2py/applications/welcome/controllers/section$$i.py ; \
+	done ; \
+	ln -s `pwd`/web2py/routes.py \
+		`pwd`/web2py/web2py/routes.py ; \

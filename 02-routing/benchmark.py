@@ -21,6 +21,7 @@ path = os.getcwd()
 
 frameworks = ['bottle', 'pyramid', 'wheezy.web']
 frameworks += ['django', 'flask', 'tornado']
+#frameworks = ['web2py']
 frameworks = sorted(frameworks)
 
 
