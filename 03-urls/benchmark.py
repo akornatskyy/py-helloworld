@@ -20,7 +20,7 @@ else:
 path = os.getcwd()
 
 frameworks = ['pyramid', 'wheezy.web']
-frameworks += ['django', 'tornado']
+frameworks += ['django', 'flask', 'tornado']
 frameworks = sorted(frameworks)
 
 
