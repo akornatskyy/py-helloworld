@@ -3,17 +3,16 @@
 """
 
 import os
-import profile
 import sys
+
+try:
+    import cProfile as profile
+except ImportError:
+    import profile
 
 from pstats import Stats
 from timeit import timeit
 
-
-if sys.version_info[0] >= 3:
-    b = b''
-else:
-    b = ''
 
 environ = {
         'HTTP_ACCEPT': 'text/html,application/xhtml+xml,application/xml;'
@@ -64,13 +63,17 @@ def run(number=100000):
         os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
-            def wrapper():
-                b.join(main(environ.copy(), start_response))
-            time = timeit(wrapper, number=number)
+            def f():
+                list(main(environ.copy(), start_response))
+            time = timeit(f, number=number)
             st = Stats(profile.Profile().runctx(
-                'wrapper()', globals(), locals()))
+                'f()', globals(), locals()))
             print("%-11s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
                 number / time, st.total_calls, len(st.stats)))
+            if 0:
+                st = Stats(profile.Profile().runctx(
+                    'timeit(f, number=number)', globals(), locals()))
+                st.strip_dirs().sort_stats('time').print_stats(10)
             del sys.modules['app']
         except ImportError:
             print("%-15s not installed" % framework)
