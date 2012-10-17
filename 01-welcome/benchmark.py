@@ -5,6 +5,14 @@
 import os
 import sys
 
+PY3 = sys.version_info[0] >= 3
+if PY3:
+    from io import BytesIO
+    ntob = lambda n, encoding: n.encode(encoding)
+else:
+    from cStringIO import StringIO as BytesIO
+    ntob = lambda n, encoding: n
+
 try:
     import cProfile as profile
 except ImportError:
@@ -37,7 +45,7 @@ environ = {
         'uwsgi.version': '1.2.6',
         'wsgi.errors': None,
         'wsgi.file_wrapper': None,
-        'wsgi.input': None,
+        'wsgi.input': BytesIO(ntob('', 'utf-8')),
         'wsgi.multiprocess': False,
         'wsgi.multithread': False,
         'wsgi.run_once': False,
@@ -46,12 +54,12 @@ environ = {
 }
 
 frameworks = ['bottle', 'pyramid', 'wheezy.web', 'wsgi']
-frameworks += ['django', 'flask', 'web2py']
+frameworks += ['circuits', 'django', 'flask', 'web2py']
 frameworks += ['bobo', 'cherrypy', 'tornado', 'web.py']
 frameworks = sorted(frameworks)
 
 
-def start_response(status, headers):
+def start_response(status, headers, exc_info=None):
     return None
 
 
