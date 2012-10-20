@@ -1,0 +1,7 @@
+@require(user)
+@if user:
+    Hello, @user.name!
+    | <a href="/signout">Sign out</a>
+@else:
+    <a href="/signin">Sign in</a>
+@end
