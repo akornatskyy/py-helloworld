@@ -1,4 +1,4 @@
 
 routes_in = (
-    ('/$anything','/welcome/$anything'),
+    ('/$anything', '/welcome/$anything'),
 )

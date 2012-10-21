@@ -23,7 +23,7 @@ dynamic_urls = [(f, WelcomeHandler) for f in features]
 
 all_urls = []
 all_urls += [url('%s/%s' % (s, f), WelcomeHandler)
-        for s in sections for f in features]
+             for s in sections for f in features]
 all_urls += [url('{locale:(en|ru)}/', seo_urls)]
 all_urls += [url('{user}/{repo}/', dynamic_urls)]
 

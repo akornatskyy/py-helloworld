@@ -22,10 +22,9 @@ def welcome(request):
     return response
 
 
-
 all_urls = [
-        url('welcome', WelcomeHandler),
-        #url('welcome', welcome),
+    url('welcome', WelcomeHandler),
+    #url('welcome', welcome),
 ]
 
 warnings.simplefilter('ignore')

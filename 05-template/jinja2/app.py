@@ -7,9 +7,8 @@ from jinja2 import FileSystemLoader
 
 
 def main(name):
-    searchpath=[name]
     env = Environment(
-        loader=FileSystemLoader(searchpath),
+        loader=FileSystemLoader(searchpath=[name]),
         extensions=[]
     )
     template = env.get_template('welcome.html')

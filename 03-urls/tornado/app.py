@@ -40,11 +40,11 @@ urls = [
 ]
 urls += [
     URLSpec("/%s/%s" % (s, f), WelcomeHandler, name="%s-%s" % (s, f))
-        for s in sections for f in features
+    for s in sections for f in features
 ]
 urls += [
     URLSpec("/(?P<user>\w+)/(?P<repo>\w+)/%s" % f, WelcomeHandler, name=f)
-        for f in features
+    for f in features
 ]
 
 main = tornado.wsgi.WSGIApplication(urls)

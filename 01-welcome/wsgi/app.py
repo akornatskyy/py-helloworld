@@ -12,7 +12,7 @@ else:  # pragma: nocover
 
 def welcome(env, start_response):
     start_response('200 OK', [
-        ('Content-Type','text/html'),
+        ('Content-Type', 'text/html'),
         ('Content-Length', '12')
     ])
     return [b('Hello World!')]
@@ -22,7 +22,7 @@ def main(env, start_response):
     if env['PATH_INFO'] == '/welcome':
         return welcome(env, start_response)
     start_response('404 Not Found', [
-        ('Content-Type','text/html'),
-        ('Content-Length','0')
+        ('Content-Type', 'text/html'),
+        ('Content-Length', '0')
     ])
     return [b('')]

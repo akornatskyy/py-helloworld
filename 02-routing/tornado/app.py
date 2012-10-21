@@ -13,15 +13,15 @@ class WelcomeHandler(tornado.web.RequestHandler):
 
 urls = [
     ("/%s/%s" % (s, f), WelcomeHandler)
-        for s in sections for f in features
+    for s in sections for f in features
 ]
 urls += [
     ("/(?P<locale>en|ru)/%s" % f, WelcomeHandler)
-        for f in features
+    for f in features
 ]
 urls += [
     ("/(?P<user>\w+)/(?P<repo>\w+)/%s" % f, WelcomeHandler)
-        for f in features
+    for f in features
 ]
 
 main = tornado.wsgi.WSGIApplication(urls)

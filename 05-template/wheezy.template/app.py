@@ -8,7 +8,7 @@ from wheezy.template.ext.core import CoreExtension
 
 
 def main(name):
-    searchpath=[name]
+    searchpath = [name]
     engine = Engine(
         loader=FileLoader(searchpath),
         extensions=[

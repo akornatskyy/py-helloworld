@@ -47,12 +47,12 @@ dynamic_urls = [url(f, WelcomeHandler, name=f) for f in features]
 
 all_urls = []
 all_urls += [
-        url('welcome', WelcomeHandler),
-        url('{user}', UserHandler),
-        url('{user}/{repo}', RepoHandler, name='repo'),
+    url('welcome', WelcomeHandler),
+    url('{user}', UserHandler),
+    url('{user}/{repo}', RepoHandler, name='repo'),
 ]
 all_urls += [url('%s/%s' % (s, f), WelcomeHandler, name='%s-%s' % (s, f))
-        for s in sections for f in features]
+             for s in sections for f in features]
 all_urls += [url('{user}/{repo}/', dynamic_urls)]
 
 warnings.simplefilter('ignore')

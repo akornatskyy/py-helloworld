@@ -38,7 +38,7 @@ def run(name, wrapper, number=10000):
             time = timeit(f, number=number)
             st = Stats(profile.Profile().runctx('f()', globals(), locals()))
             print("%-11s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
-                number / time, st.total_calls, len(st.stats)))
+                  number / time, st.total_calls, len(st.stats)))
             if 0:
                 st = Stats(profile.Profile().runctx(
                     'timeit(f, number=number)', globals(), locals()))

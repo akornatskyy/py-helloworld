@@ -13,9 +13,7 @@ urls = [
 
 if __name__ == "__main__":
     import tornado.ioloop
-    app = tornado.web.Application(urls,
-                                  debug=False
-    )
+    app = tornado.web.Application(urls, debug=False)
     app.listen(8080)
     tornado.ioloop.IOLoop.instance().start()
 else:
