@@ -8,8 +8,6 @@ ENV=env
 PYTHON=$(ENV)/bin/python$(VERSION)
 PYPY=pypy-1.9
 
-SERVER=uwsgi
-
 
 env:
 	PYTHON_EXE=/usr/local/bin/python$(VERSION); \
@@ -20,7 +18,8 @@ env:
 
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-			"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" ; \
+			"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" \
+			"django>=1.4.2" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
