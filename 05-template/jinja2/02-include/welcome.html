@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>My Site - Welcome</title>
+        {% include "shared/snippet/styles.html" without context %}
+    </head>
+    <body>
+        <div id="content">
+            <div id="user">
+                {% include "shared/snippet/menu-signin.html" with context %}
+            </div>
+            {% if items: %}
+                {% for i in items: %}
+                <p>
+                    {{ i.name }}: {{ i.price }}
+                </p>
+                {% endfor %}
+            {% else: %}
+                <p>No items found.</p>
+            {% endif %}
+        </div>
+        {% include "shared/snippet/footer.html" without context %}
+        {% include "shared/snippet/scripts.html" without context %}
+    </body>
+</html>

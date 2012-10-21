@@ -1,0 +1,10 @@
+
+{% macro welcome(name) %}
+    Hello, {{ name }}!
+{% endmacro %}
+
+{% macro item(i) %}
+    <p>
+        {{ i.name }}: {{ i.price }}
+    </p>
+{% endmacro %}

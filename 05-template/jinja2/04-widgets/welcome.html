@@ -1,0 +1,16 @@
+{% extends "shared/master.html" %}
+{% import "shared/widgets.html" as h %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block content %}
+    {% if items: %}
+        {% for i in items: %}
+            {{ h.item(i) }}
+        {% endfor %}
+    {% else: %}
+        <p>No items found.</p>
+    {% endif %}
+{% endblock %}
