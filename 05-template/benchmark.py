@@ -20,6 +20,7 @@ from samples import user
 path = os.getcwd()
 
 frameworks = ['wheezy.template']
+#frameworks += ['mako']
 frameworks = sorted(frameworks)
 
 

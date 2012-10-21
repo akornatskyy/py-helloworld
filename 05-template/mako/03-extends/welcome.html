@@ -1,0 +1,15 @@
+<%inherit file="shared/master.html" />
+
+<%block name="title">
+    Welcome
+</%block>
+
+% if items:
+    % for i in items:
+    <p>
+        ${i.name}: ${i.price}
+    </p>
+    % endfor
+% else:
+    <p>No items found.</p>
+% endif
