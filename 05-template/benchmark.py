@@ -24,7 +24,7 @@ frameworks = ['django', 'jinja2', 'tornado', 'wheezy.template']
 frameworks = sorted(frameworks)
 
 
-def run(name, ctx, number=1000):
+def run(name, ctx, number=100000):
     sys.path[0] = '.'
     print("\n%-16s   msec    rps  tcalls  funcs" % name)
     for framework in frameworks:
