@@ -1,0 +1,17 @@
+{% extends "shared/master.html" %}
+
+{% block title %}
+    Welcome
+{% end %}
+
+{% block content %}
+    {% if items %}
+        {% for i in items %}
+        <p>
+            {{ i.name }}: {{ i.price }}
+        </p>
+        {% end %}
+    {% else %}
+        <p>No items found.</p>
+    {% end %}
+{% end %}
