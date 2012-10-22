@@ -1,0 +1,10 @@
+
+<%def name="greeting(names)">
+    <div id="greeting">
+        % for name in names:
+        <p>
+            Hello <i>${name}</i>!
+        </p>
+        % endfor
+    </div>
+</%def>
