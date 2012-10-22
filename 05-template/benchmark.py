@@ -33,6 +33,7 @@ def run(name, ctx, number=100000):
             main = __import__('app', None, None, ['main']).main
             render = main(name)
             f = lambda: render(ctx)
+            f()  # warm up first call
             time = timeit(f, number=number)
             st = Stats(profile.Profile().runctx('f()', globals(), locals()))
             print("%-16s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
@@ -43,7 +44,7 @@ def run(name, ctx, number=100000):
                 st.strip_dirs().sort_stats('time').print_stats(10)
             del sys.modules['app']
         except ImportError:
-            print("%-20s not installed" % framework)
+            print("%-22s not installed" % framework)
 
 
 def run_batch(ctx):
@@ -51,7 +52,6 @@ def run_batch(ctx):
     run('01-initial', ctx)
     run('02-include', ctx)
     run('03-extends', ctx)
-    run('04-widgets', ctx)
 
 
 if __name__ == '__main__':

@@ -14,7 +14,6 @@ def main(name):
     from django.conf import settings
     from django.template import Context
     from django.template import loader
-    from djangotags import register_tags
 
     settings.configure(
         TEMPLATE_DIRS=[name],
@@ -24,6 +23,5 @@ def main(name):
             )),
         )
     )
-    register_tags()
     template = loader.get_template('welcome.html')
     return lambda ctx: template.render(Context(ctx))
