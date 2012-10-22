@@ -19,12 +19,13 @@ env:
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 			"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" \
-			"django>=1.4.2" ; \
+			"django>=1.4.2" "tornado>=2.4"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-				"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" ; \
+				"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" \
+				"tornado>=2.4"; \
 	fi
 
 pypy:
@@ -41,7 +42,8 @@ pypy:
 	$(PYPY)/bin/pypy distribute_setup.py ; \
 	rm distribute* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
-		"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6"
+		"wheezy.template>=0.1.125" "mako>=0.7.2" "jinja2>=2.6" \
+		"tornado>=2.4"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
