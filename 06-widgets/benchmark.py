@@ -16,7 +16,7 @@ from timeit import timeit
 
 path = os.getcwd()
 
-frameworks = ['jinja2', 'wheezy.template']
+frameworks = ['django', 'jinja2', 'wheezy.template']
 #frameworks += ['mako']
 frameworks = sorted(frameworks)
 
