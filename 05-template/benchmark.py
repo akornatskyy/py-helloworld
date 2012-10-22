@@ -24,11 +24,14 @@ frameworks = ['django', 'jinja2', 'tornado', 'wheezy.template']
 frameworks = sorted(frameworks)
 
 
-def run(name, ctx, number=100000):
+def run(name, ctx, number=1000):
     sys.path[0] = '.'
     print("\n%-16s   msec    rps  tcalls  funcs" % name)
     for framework in frameworks:
         os.chdir(os.path.join(path, framework))
+        if not os.path.exists(name):
+            print("%-22s not available" % framework)
+            continue
         try:
             main = __import__('app', None, None, ['main']).main
             render = main(name)
@@ -52,6 +55,7 @@ def run_batch(ctx):
     run('01-initial', ctx)
     run('02-include', ctx)
     run('03-extends', ctx)
+    run('04-preprocess', ctx)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,18 @@
+#extends("shared/master.html")
+
+#def title():
+    Welcome
+#end
+
+#def content():
+    @require(items)
+    @if items:
+        @for i in items:
+        <p>
+            @i.name: @i.price
+        </p>
+        @end
+    @else:
+        <p>No items found.</p>
+    @end
+#end
