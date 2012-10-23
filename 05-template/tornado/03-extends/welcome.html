@@ -8,7 +8,7 @@
     {% if items %}
         {% for i in items %}
         <p>
-            {{ i.name }}: {{ i.price }}
+            {{ escape(i.name) }}: {{ i.price }}
         </p>
         {% end %}
     {% else %}

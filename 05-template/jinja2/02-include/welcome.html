@@ -12,7 +12,7 @@
             {% if items: %}
                 {% for i in items: %}
                 <p>
-                    {{ i.name }}: {{ i.price }}
+                    {{ i.name | e }}: {{ i.price }}
                 </p>
                 {% endfor %}
             {% else: %}

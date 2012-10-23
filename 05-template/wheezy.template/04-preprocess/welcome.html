@@ -9,7 +9,7 @@
     @if items:
         @for i in items:
         <p>
-            @i.name: @i.price
+            @i.name!h: @i.price
         </p>
         @end
     @else:
