@@ -1,6 +1,6 @@
 
 {% macro greeting(name) %}
     <p>
-        Hello <i>{{ name }}</i>!
+        Hello <i>{{ name | e }}</i>!
     </p>
 {% endmacro %}

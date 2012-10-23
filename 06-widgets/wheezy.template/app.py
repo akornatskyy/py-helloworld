@@ -2,9 +2,10 @@
 """
 """
 
+from wheezy.html.utils import escape_html as escape
 from wheezy.template.engine import Engine
-from wheezy.template.loader import FileLoader
 from wheezy.template.ext.core import CoreExtension
+from wheezy.template.loader import FileLoader
 
 
 def main(name):
@@ -15,6 +16,7 @@ def main(name):
             CoreExtension()
         ]
     )
+    engine.global_vars.update({'h': escape})
 
     template = engine.get_template('welcome.html')
     return template.render

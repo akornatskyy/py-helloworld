@@ -3,7 +3,7 @@
     <div id="greeting">
         % for name in names:
         <p>
-            Hello <i>${name}</i>!
+            Hello <i>${name|h}</i>!
         </p>
         % endfor
     </div>
