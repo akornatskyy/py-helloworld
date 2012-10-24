@@ -56,8 +56,15 @@ def build_wrapper(path_info):
     return wrapper
 
 
-if __name__ == '__main__':
+def run_batch(name):
+    print('\n%s' % name)
     run('welcome', build_wrapper('/welcome'))
     run('memory', build_wrapper('/memory'))
     run('pylibmc', build_wrapper('/pylibmc'))
     run('memcache', build_wrapper('/memcache'))
+
+
+if __name__ == '__main__':
+    run_batch('no gzip')
+    environ['HTTP_ACCEPT_ENCODING'] = 'gzip,deflate,sdch'
+    run_batch('gzip')

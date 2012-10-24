@@ -30,8 +30,11 @@ cache_factory = lambda: cache
 # cache profiles
 
 memory_profile = CacheProfile(
-    'server', namespace='memory', duration=timedelta(minutes=15))
-memcache_profile = CacheProfile(
-    'server', namespace='memcache', duration=timedelta(minutes=15))
+    'server', namespace='memory', duration=timedelta(minutes=15),
+    vary_environ=['HTTP_ACCEPT_ENCODING'])
 pylibmc_profile = CacheProfile(
-    'server', namespace='pylibmc', duration=timedelta(minutes=15))
+    'server', namespace='pylibmc', duration=timedelta(minutes=15),
+    vary_environ=['HTTP_ACCEPT_ENCODING'])
+memcache_profile = CacheProfile(
+    'server', namespace='memcache', duration=timedelta(minutes=15),
+    vary_environ=['HTTP_ACCEPT_ENCODING'])

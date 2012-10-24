@@ -3,7 +3,6 @@ environ = {
     'HTTP_ACCEPT': 'text/html,application/xhtml+xml,application/xml;'
                    'q=0.9,*/*;q=0.8',
     'HTTP_ACCEPT_CHARSET': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-    'HTTP_ACCEPT_ENCODING': 'gzip,deflate,sdch',
     'HTTP_ACCEPT_LANGUAGE': 'uk,en-US;q=0.8,en;q=0.6',
     'HTTP_CONNECTION': 'keep-alive',
     'HTTP_HOST': 'vm0.dev.local:8080',
