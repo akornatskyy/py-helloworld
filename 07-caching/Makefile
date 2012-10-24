@@ -20,13 +20,15 @@ env:
 
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-			"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" \
-			"wheezy.web>=0.1.304" ; \
+			"uwsgi>=1.2.6" "gunicorn>=0.14.6" \
+			"python-memcached>=1.48" "pylibmc>=1.2.3" \
+			"django>=1.4.2" "wheezy.web>=0.1.307" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-		   		"uwsgi>=1.3" "wheezy.web>=0.1.304" ; \
+		   		"uwsgi>=1.3" "python-memcached>=1.48" \
+		   		"wheezy.web>=0.1.307" ; \
 	fi
 
 pypy:
@@ -43,7 +45,7 @@ pypy:
 	$(PYPY)/bin/pypy distribute_setup.py ; \
 	rm distribute* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
-		"gunicorn>=0.14.6" "wheezy.web>=0.1.304"
+		"gunicorn>=0.14.6" "python-memcached>=1.48" "wheezy.web>=0.1.307"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
