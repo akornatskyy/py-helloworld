@@ -7,6 +7,7 @@ from django.views.decorators.gzip import gzip_page
 hello = ''.join(['%s. Hello World! ' % i for i in xrange(500)])
 
 
+@gzip_page
 def welcome(request):
     return HttpResponse(hello)
 
