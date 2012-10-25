@@ -27,7 +27,7 @@ def start_response(status, headers):
     return None
 
 
-def run(name, wrapper, number=10000):
+def run(name, wrapper, number=100000):
     sys.path[0] = '.'
     print("\n%-11s   msec    rps  tcalls  funcs" % name)
     for framework in frameworks:
