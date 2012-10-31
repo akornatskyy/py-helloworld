@@ -23,6 +23,8 @@ up:
 		else cd webpy && git pull ; fi
 	if [ ! -d web2py ]; then git clone git://github.com/web2py/web2py.git ; \
 		else cd web2py && git pull ; fi
+	if [ ! -d turbogears ]; then git clone git://github.com/TurboGears/tg2.git turbogears ; \
+		else cd turbogears && git pull ; fi
 
 	if [ ! -d flask ]; then git clone git://github.com/mitsuhiko/flask.git ; \
 		else cd flask && git pull ; fi
@@ -54,9 +56,9 @@ count:
 pep8: env
 	echo "\nnumber of PEP8 errors or warnings:"
 	# save your time
-	if [ -f web2py/gluon/contrib/populate.py ]; then \
-		rm web2py/gluon/contrib/populate.py; \
-	fi
+	#if [ -f web2py/gluon/contrib/populate.py ]; then \
+	#	rm web2py/gluon/contrib/populate.py; \
+	#fi
 	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
 		env/bin/pep8 --count -qq --ignore=E501,E231,W293,W291 $$r ; \
