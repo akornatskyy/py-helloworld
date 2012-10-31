@@ -54,8 +54,9 @@ environ = {
 }
 
 frameworks = ['bottle', 'pyramid', 'wheezy.web', 'wsgi']
-frameworks += ['circuits', 'django', 'flask', 'web2py']
-frameworks += ['bobo', 'cherrypy', 'tornado', 'web.py']
+frameworks += ['circuits', 'django', 'flask']
+frameworks += ['bobo', 'cherrypy', 'tornado']
+frameworks += ['turbogears', 'web.py', 'web2py']
 frameworks = sorted(frameworks)
 
 
@@ -84,6 +85,9 @@ def run(number=100000):
             del sys.modules['app']
         except ImportError:
             print("%-15s not installed" % framework)
+        modules = [m for m in sys.modules.keys() if m.endswith('helloworld')]
+        for m in modules:
+            del sys.modules[m]
 
 
 if __name__ == '__main__':

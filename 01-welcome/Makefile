@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -156,4 +156,19 @@ ifeq ($(SERVER),uwsgi)
 else
 	export PYTHONPATH=$$PYTHONPATH:circuits ; \
 	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+turbogears:
+	$(ENV)/bin/easy_install-$(VERSION) -i $(PYPI) -O2 \
+			"tg.devtools>=2.2.0" "webob==1.1.1"; \
+	cd turbogears ; rm -rf helloworld ; \
+	../env/bin/paster quickstart -n -x --noinput helloworld ; \
+	cd helloworld ; ../../env/bin/python setup.py develop ; \
+	cp ../root.py helloworld/controllers ; \
+	cp ../development.ini .
+
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini turbogears/uwsgi.ini
+else
+	$(ENV)/bin/gunicorn_paster -w 4 `pwd`/turbogears/helloworld/development.ini
 endif
