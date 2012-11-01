@@ -14,7 +14,8 @@ from wheezy.http import CacheProfile
 
 memory_cache = MemoryCache()
 
-memcache_cache = memcache_factory(['unix:/tmp/memcached.sock'])
+memcache_cache = memcache_factory(['unix:/tmp/memcached.sock'],
+        key_encode=lambda key: key.replace(' ', '_'))
 
 pylibmc_pool = EagerPool(lambda: pylibmc_factory(['/tmp/memcached.sock']),
                          size=100)
