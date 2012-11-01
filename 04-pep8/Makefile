@@ -23,6 +23,8 @@ up:
 		else cd webpy && git pull ; fi
 	if [ ! -d web2py ]; then git clone git://github.com/web2py/web2py.git ; \
 		else cd web2py && git pull ; fi
+	if [ ! -d pysi ]; then hg clone https://bitbucket.org/imbolc/pysi ; \
+		else cd pysi && hg pull -u ; fi
 	if [ ! -d turbogears ]; then git clone git://github.com/TurboGears/tg2.git turbogears ; \
 		else cd turbogears && git pull ; fi
 
