@@ -54,7 +54,7 @@ environ = {
 }
 
 frameworks = ['bottle', 'pyramid', 'wheezy.web', 'wsgi']
-frameworks += ['circuits', 'django', 'flask']
+frameworks += ['circuits', 'django', 'flask', 'pysi']
 frameworks += ['bobo', 'cherrypy', 'tornado']
 frameworks += ['turbogears', 'web.py', 'web2py']
 frameworks = sorted(frameworks)

@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogearsi pysi
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears pysi
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -31,7 +31,7 @@ env:
 			"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
 			"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
 			"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" \
-			"cherrypy>=3.2.2" "circuits>=1.6" ; \
+			"cherrypy>=3.2.2" "pysi>=0.13.0" "circuits>=1.6"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
@@ -55,7 +55,7 @@ pypy:
 		"gunicorn>=0.14.6" "flask>=0.9" \
 		"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
 		"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" \
-		"cherrypy>=3.2.2" "circuits>=1.6"
+		"cherrypy>=3.2.2" "pysi>=0.13.0" "circuits>=1.6"
 
 
 clean:
@@ -171,4 +171,12 @@ ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini turbogears/uwsgi.ini
 else
 	$(ENV)/bin/gunicorn_paster -b 0.0.0.0:8080 -w 4 `pwd`/turbogears/helloworld/development.ini
+endif
+
+pysi:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini pysi/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:pysi ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
 endif
