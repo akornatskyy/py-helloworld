@@ -163,7 +163,7 @@ turbogears:
 			"tg.devtools>=2.2.0" "webob==1.1.1"; \
 	cd turbogears ; rm -rf helloworld ; \
 	../env/bin/paster quickstart -n -x --noinput helloworld ; \
-	cd helloworld ; ../../env/bin/python setup.py develop ; \
+	cd helloworld ; ../../env/bin/python$(VERSION) setup.py develop ; \
 	cp ../root.py helloworld/controllers ; \
 	cp ../development.ini .
 
