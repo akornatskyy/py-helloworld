@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits
+.SILENT: clean env pypy django flask wheezy.web
+.PHONY: clean env pypy django flask wheezy.web
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -22,7 +22,7 @@ env:
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 			"uwsgi>=1.2.6" "gunicorn>=0.14.6" \
 			"python-memcached>=1.48" "pylibmc>=1.2.3" \
-			"django>=1.4.2" "wheezy.web>=0.1.307" ; \
+			"django>=1.4.2" "wheezy.web>=0.1.307" "Flask-Cache>=0.9.0"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
@@ -45,7 +45,8 @@ pypy:
 	$(PYPY)/bin/pypy distribute_setup.py ; \
 	rm distribute* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
-		"gunicorn>=0.14.6" "python-memcached>=1.48" "wheezy.web>=0.1.307"
+		"gunicorn>=0.14.6" "python-memcached>=1.48" "wheezy.web>=0.1.307" \
+		"Flask-Cache>=0.9.0"
 
 clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
@@ -64,5 +65,13 @@ ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini wheezy.web/uwsgi.ini
 else
 	export PYTHONPATH=$$PYTHONPATH:wheezy.web ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+flask:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini flask/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:flask ; \
 	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
 endif

@@ -19,7 +19,7 @@ from samples import environ
 path = os.getcwd()
 
 frameworks = ['wheezy.web']
-frameworks += ['django']
+frameworks += ['django', 'flask']
 frameworks = sorted(frameworks)
 
 
