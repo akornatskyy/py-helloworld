@@ -170,5 +170,5 @@ turbogears:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini turbogears/uwsgi.ini
 else
-	$(ENV)/bin/gunicorn_paster -w 4 `pwd`/turbogears/helloworld/development.ini
+	$(ENV)/bin/gunicorn_paster -b 0.0.0.0:8080 -w 4 `pwd`/turbogears/helloworld/development.ini
 endif
