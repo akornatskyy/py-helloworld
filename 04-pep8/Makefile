@@ -63,6 +63,7 @@ pep8: env
 	#fi
 	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
-		env/bin/pep8 --count -qq --ignore=E501,E231,W293,W291 $$r ; \
+		env/bin/pep8 --count -qq --ignore=E501,E231,W293,W291 $$r; \
+		if [ $$? = "0" ]; then echo 0; fi \
 	done ; \
 	exit 0
