@@ -1,12 +1,12 @@
 
 from datetime import timedelta
 
+from wheezy.core.pooling import EagerPool
 from wheezy.caching import CacheClient
 from wheezy.caching import MemoryCache
-from wheezy.caching.memcache import client_factory as memcache_factory
-from wheezy.caching.pools import EagerPool
-from wheezy.caching.pools import Pooled
+from wheezy.caching.memcache import MemcachedClient
 from wheezy.caching.pylibmc import client_factory as pylibmc_factory
+from wheezy.caching.pylibmc import MemcachedClient as PylibmcClient
 from wheezy.http import CacheProfile
 
 
@@ -14,19 +14,17 @@ from wheezy.http import CacheProfile
 
 memory_cache = MemoryCache()
 
-memcache_cache = memcache_factory(['unix:/tmp/memcached.sock'],
-        key_encode=lambda key: key.replace(' ', '_'))
+memcache_cache = MemcachedClient(['unix:/tmp/memcached.sock'],
+                                 key_encode=lambda key: key.replace(' ', '_'))
 
 pylibmc_pool = EagerPool(lambda: pylibmc_factory(['/tmp/memcached.sock']),
                          size=100)
 
 cache = CacheClient({
-    'memory': lambda: memory_cache,
-    'memcache': lambda: memcache_cache,
-    'pylibmc': lambda: Pooled(pylibmc_pool)
+    'memory': memory_cache,
+    'memcache': memcache_cache,
+    'pylibmc':  PylibmcClient(pylibmc_pool)
 }, default_namespace='memory')
-
-cache_factory = lambda: cache
 
 # cache profiles
 

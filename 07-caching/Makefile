@@ -22,13 +22,13 @@ env:
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 			"uwsgi>=1.2.6" "gunicorn>=0.14.6" \
 			"python-memcached>=1.48" "pylibmc>=1.2.3" \
-			"django>=1.4.2" "wheezy.web>=0.1.307" "Flask-Cache>=0.9.0"; \
+			"django>=1.4.2" "wheezy.web>=0.1.315" "Flask-Cache>=0.9.0"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 		   		"uwsgi>=1.3" "python-memcached>=1.48" \
-		   		"wheezy.web>=0.1.307" ; \
+		   		"wheezy.web>=0.1.315" ; \
 	fi
 
 pypy:
@@ -45,7 +45,7 @@ pypy:
 	$(PYPY)/bin/pypy distribute_setup.py ; \
 	rm distribute* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
-		"gunicorn>=0.14.6" "python-memcached>=1.48" "wheezy.web>=0.1.307" \
+		"gunicorn>=0.14.6" "python-memcached>=1.48" "wheezy.web>=0.1.315" \
 		"Flask-Cache>=0.9.0"
 
 clean:

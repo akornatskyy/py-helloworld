@@ -5,7 +5,7 @@ from wheezy.http.middleware import http_cache_middleware_factory
 from wheezy.web.middleware import bootstrap_defaults
 from wheezy.web.middleware import path_routing_middleware_factory
 
-from config import cache_factory
+from config import cache
 from urls import all_urls
 
 
@@ -13,7 +13,7 @@ options = {}
 
 # HTTPCacheMiddleware
 options.update({
-    'http_cache_factory': cache_factory
+    'http_cache': cache
 })
 
 warnings.simplefilter('ignore')
