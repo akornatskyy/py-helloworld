@@ -5,7 +5,7 @@ all: env up count pep8
 
 env:
 	if [ ! -d env ]; then \
-		virtualenv env ; env/bin/easy_install -O2 pep8 flake8; \
+		virtualenv env ; env/bin/easy_install -O2 pep8 "flake8<1.6"; \
 	fi
 
 up:
@@ -72,7 +72,7 @@ mccabe:
 	echo "\nnumber of McCabe errors and overal complexity:"
 	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
-		r=`flake8 --max-complexity 10 $$r | grep W901 | \
+		r=`env/bin/flake8 --max-complexity 10 $$r | grep W901 | \
 			cut -d\( -f2 | cut -d\) -f1` ; \
 		if [ -z "$$r" ]; then echo 0 0; \
 		else echo "$$r" | awk '{c+=1;s+=$$1} END {print c, s}'; fi \
