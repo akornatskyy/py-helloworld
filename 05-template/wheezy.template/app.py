@@ -6,6 +6,7 @@ from wheezy.html.utils import escape_html as escape
 from wheezy.template.engine import Engine
 from wheezy.template.ext.core import CoreExtension
 from wheezy.template.loader import FileLoader
+from wheezy.template.loader import PreprocessLoader
 
 
 def main(name):
@@ -26,13 +27,3 @@ def main(name):
 
     template = engine.get_template('welcome.html')
     return template.render
-
-
-class PreprocessLoader(object):
-
-    def __init__(self, engine, ctx=None):
-        self.engine = engine
-        self.ctx = ctx or {}
-
-    def load(self, name):
-        return self.engine.render(name, self.ctx, {}, {})
