@@ -69,6 +69,8 @@ pep8: env
 	exit 0
 
 mccabe:
+	# this cause an error in falke8
+	rm -rf web2py/gluon/contrib/markmin/ ; \
 	echo "\nnumber of McCabe errors and overal complexity:"
 	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
