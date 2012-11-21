@@ -61,7 +61,7 @@ pep8: env
 	#if [ -f web2py/gluon/contrib/populate.py ]; then \
 	#	rm web2py/gluon/contrib/populate.py; \
 	#fi
-	for r in `ls -d ./wheezy.*/ | cut -d / -f 2 | grep -v env | sort`; do \
+	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
 		env/bin/pep8 --count -qq --ignore=E501,E231,W293,W291 $$r; \
 		if [ $$? = "0" ]; then echo 0; fi \
@@ -71,7 +71,7 @@ pep8: env
 mccabe:
 	# this cause an error in falke8
 	rm -rf web2py/gluon/contrib/markmin/ ; \
-	echo "\nnumber of McCabe errors and overal complexity:"
+	echo "\nnumber of McCabe errors and overall complexity:"
 	for r in `ls -d ./*/ | cut -d / -f 2 | grep -v env | sort`; do \
 		echo -n "$$r => "; \
 		r=`env/bin/flake8 --max-complexity 10 $$r | grep W901 | \
