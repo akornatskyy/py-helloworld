@@ -7,6 +7,10 @@ from samples import sections
 # from django.contrib import admin
 # admin.autodiscover()
 
+
+handler404 = 'helloworld.views.error404'
+
+
 urlpatterns = patterns(
     'helloworld.views',
     *[url("^%s/%s$" % (s, f), 'welcome')
@@ -15,7 +19,7 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'helloworld.views',
     *[url("^(?P<locale>en|ru)/%s$" % f, 'welcome')
-        for s in sections for f in features]
+        for f in features]
 )
 urlpatterns += patterns(
     'helloworld.views',
