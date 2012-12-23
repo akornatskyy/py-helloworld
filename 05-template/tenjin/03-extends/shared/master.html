@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>My Site -
+        <?py if not captured_as("title"): ?>
+        <?py pass ?>
+        <?py #endif ?></title>
+        <?py include('shared/snippet/styles.html') ?>
+    </head>
+    <body>
+        <div id="content">
+            <div id="user">
+                <?py include('shared/snippet/menu-signin.html') ?>
+            </div>
+            #{_content}
+        </div>
+        <?py include('shared/snippet/footer.html') ?>
+        <?py include('shared/snippet/scripts.html') ?>
+        <?py if not captured_as("script"): ?>
+        <?py pass ?>
+        <?py #endif ?>
+    </body>
+</html>
+

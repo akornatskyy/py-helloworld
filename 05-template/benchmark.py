@@ -19,7 +19,7 @@ from samples import user
 
 path = os.getcwd()
 
-frameworks = ['django', 'jinja2', 'tornado', 'wheezy.template']
+frameworks = ['django', 'jinja2', 'tenjin', 'tornado', 'wheezy.template']
 #frameworks += ['mako']
 frameworks = sorted(frameworks)
 

@@ -1,0 +1,15 @@
+<?py _context["_layout"] = "shared/master.html" ?>
+
+<?py for t in capture_as("title"): ?>
+Welcome
+<?py #endfor ?>
+
+<?py if items: ?>
+    <?py for i in items: ?>
+    <p>
+        ${i.name}: #{i.price}
+    </p>
+    <?py #endfor ?>
+<?py else: ?>
+    <p>No items found.</p>
+<?py #endif ?>

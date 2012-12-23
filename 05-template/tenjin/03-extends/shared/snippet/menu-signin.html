@@ -1,0 +1,6 @@
+<?py if user: ?>
+    Hello, ${user.name}!
+    | <a href="/signout">Sign out</a>
+<?py else: ?>
+    <a href="/signin">Sign in</a>
+<?py #end ?>
