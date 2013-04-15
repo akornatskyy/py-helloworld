@@ -62,6 +62,9 @@ clean:
 	find ./ -type d -name __pycache__ | xargs rm -rf
 	find ./ -name '*.py[co]' -delete
 
+run:
+	taskset 0x01 $(ENV)/bin/python$(VERSION) benchmark.py
+
 django:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini django/uwsgi.ini
