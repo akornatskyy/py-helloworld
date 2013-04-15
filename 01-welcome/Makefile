@@ -28,16 +28,16 @@ env:
 
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-			"uwsgi>=1.2.6" "gunicorn>=0.14.6" "django>=1.4.1" "flask>=0.9" \
-			"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
-			"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" \
-			"cherrypy>=3.2.2" "pysi>=0.13.0" "circuits>=1.6"; \
+			"uwsgi>=1.9.6" "gunicorn>=0.14.6" "django>=1.5.1" "flask>=0.9" \
+			"pyramid>=1.4" "web.py>=0.37" "bottle>=0.11.6" \
+			"wheezy.web>=0.1.365" "tornado>=3.0.1" "bobo>=1.0.0" \
+			"cherrypy>=3.2.4" "circuits>=2.1.0"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
 			&& ./easy_install-$(VERSION) -i $(PYPI) -O2 \
-		   		"uwsgi>=1.3" "pyramid>=1.4a2" "bottle>=0.10.11" \
-				"wheezy.web>=0.1.304" "tornado>=2.4" "circuits>=1.6" ; \
+		   		"uwsgi>=1.9.6" "pyramid>=1.4" "bottle>=0.11.6" \
+				"wheezy.web>=0.1.365" "tornado>=3.0.1" ; \
 	fi
 
 pypy:
@@ -53,9 +53,9 @@ pypy:
 	rm -rf setuptools* ; \
 	cd $(PYPY)/bin && ./easy_install -i $(PYPI) -O2 \
 		"gunicorn>=0.14.6" "flask>=0.9" \
-		"pyramid>=1.4a2" "web.py>=0.37" "bottle>=0.10.11" \
-		"wheezy.web>=0.1.304" "tornado>=2.4" "bobo>=1.0.0" \
-		"cherrypy>=3.2.2" "pysi>=0.13.0" "circuits>=1.6"
+		"pyramid>=1.4" "web.py>=0.37" "bottle>=0.11.6" \
+		"wheezy.web>=0.1.365" "tornado>=3.0.1" "bobo>=1.0.0" \
+		"cherrypy>=3.2.4" "circuits>=2.1.0"
 
 
 clean:
@@ -159,8 +159,13 @@ else
 endif
 
 turbogears:
+	# http://turbogears.org/2.1/docs/main/DownloadInstall.html#upgrading-turbogears
+	# rm -rf env
+	# virtualenv --python=/usr/local/bin/python2.7 env
 	$(ENV)/bin/easy_install-$(VERSION) -i $(PYPI) -O2 \
-			"tg.devtools>=2.2.0" "webob==1.1.1"; \
+		pysqlite uwsgi ; \
+	$(ENV)/bin/easy_install-$(VERSION) -U -i http://tg.gy/current/index/ -O2 \
+		tg.devtools ; \
 	cd turbogears ; rm -rf helloworld ; \
 	../env/bin/paster quickstart -n -x --noinput helloworld ; \
 	cd helloworld ; ../../env/bin/python$(VERSION) setup.py develop ; \
