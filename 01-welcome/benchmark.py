@@ -53,7 +53,7 @@ environ = {
     'wsgi.version': (1, 0),
 }
 
-frameworks = ['bottle', 'pyramid', 'wheezy.web', 'wsgi']
+frameworks = ['bottle', 'falcon', 'pyramid', 'wheezy.web', 'wsgi']
 frameworks += ['bobo', 'django', 'flask', 'tornado']
 #frameworks = ['cherrypy', 'circuits', 'web.py', 'web2py']
 frameworks = sorted(frameworks)

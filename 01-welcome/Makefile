@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogearsi pysi
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears pysi
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogearsi pysi falcon
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears pysi falcon
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -12,12 +12,14 @@ SERVER=uwsgi
 
 
 env:
-	PYTHON_EXE=/usr/local/bin/python$(VERSION); \
-	if [ ! -x $$PYTHON_EXE ]; then \
-		    PYTHON_EXE=/usr/bin/python$(VERSION); \
-	fi; \
-	virtualenv --python=$$PYTHON_EXE --no-site-packages env
-
+	PYTHON_EXE=/usr/local/bin/python$(VERSION) ; \
+    if [ ! -x $$PYTHON_EXE ]; then \
+		PYTHON_EXE=/opt/local/bin/python$(VERSION) ; \
+    	if [ ! -x $$PYTHON_EXE ]; then \
+    		PYTHON_EXE=/usr/bin/python$(VERSION) ; \
+    	fi ; \
+    fi ; \
+    virtualenv --python=$$PYTHON_EXE env ; \
 	if [ ! -f web2py_src.zip ]; then \
 		wget http://www.web2py.com/examples/static/web2py_src.zip; \
 	fi; \
@@ -31,7 +33,7 @@ env:
 			"uwsgi>=1.9.6" "gunicorn>=0.14.6" "django>=1.5.1" "flask>=0.9" \
 			"pyramid>=1.4" "web.py>=0.37" "bottle>=0.11.6" \
 			"wheezy.web>=0.1.365" "tornado>=3.0.1" "bobo>=1.0.0" \
-			"cherrypy>=3.2.4" "circuits>=2.1.0"; \
+			"cherrypy>=3.2.4" "circuits>=2.1.0" "falcon>=0.1.7"; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
@@ -186,5 +188,13 @@ ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini pysi/uwsgi.ini
 else
 	export PYTHONPATH=$$PYTHONPATH:pysi ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+falcon:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini falcon/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:falcon ; \
 	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
 endif
