@@ -18,7 +18,7 @@ from samples import environ
 
 path = os.getcwd()
 
-frameworks = ['pyramid', 'wheezy.web']
+frameworks = ['pylons', 'pyramid', 'wheezy.web']
 frameworks += ['django', 'flask', 'tornado']
 frameworks = sorted(frameworks)
 
@@ -46,6 +46,9 @@ def run(name, wrapper, number=10000):
             del sys.modules['app']
         except ImportError:
             print("%-15s not installed" % framework)
+        modules = [m for m in sys.modules.keys() if m.endswith('helloworld')]
+        for m in modules:
+            del sys.modules[m]
 
 
 def build_wrapper(path_info):
