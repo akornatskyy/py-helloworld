@@ -23,7 +23,8 @@ env:
 	if [ "$$(echo $(VERSION) | sed 's/\.//')" -lt 30 ]; then \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) -O2 \
 			"wheezy.web>=0.1.304" "pyramid>=1.4a2" "tornado>=2.4" \
-			"django>=1.4.1" "flask>=0.9" "bottle>=0.10.11" "falcon>=0.1.7" ; \
+			"django>=1.4.1" "flask>=0.9" "bottle>=0.10.11" "falcon>=0.1.7" \
+			"pylons>=1.0.1" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
