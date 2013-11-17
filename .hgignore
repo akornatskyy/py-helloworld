@@ -6,6 +6,7 @@ distribute*
 *.pyc
 *.pyo
 *.zip
+*.egg-info/
 01-welcome/turbogears/helloworld
 04-pep8/bottle
 04-pep8/chameleon
