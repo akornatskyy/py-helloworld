@@ -1,5 +1,5 @@
-.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogearsi pysi falcon
-.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears pysi falcon
+.SILENT: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogearsi pysi falcon pylons
+.PHONY: clean env pypy django flask pyramid web.py bottle wheezy.web tornado web2py bobo cherrypy wsgi circuits turbogears pysi falcon pylons
 
 VERSION=2.7
 PYPI=http://pypi.python.org/simple
@@ -33,7 +33,8 @@ env:
 			"uwsgi>=1.9.6" "gunicorn>=0.14.6" "django>=1.5.1" "flask>=0.9" \
 			"pyramid>=1.4" "web.py>=0.37" "bottle>=0.11.6" \
 			"wheezy.web>=0.1.365" "tornado>=3.0.1" "bobo>=1.0.0" \
-			"cherrypy>=3.2.4" "circuits>=2.1.0" "falcon>=0.1.7"; \
+			"cherrypy>=3.2.4" "circuits>=2.1.0" "falcon>=0.1.7" \
+			"pylons>=1.0.1" ; \
 	else \
 		cd $(ENV)/bin && ./easy_install-$(VERSION) -i $(PYPI) \
 				"distribute>=0.6.28" \
@@ -192,6 +193,14 @@ else
 endif
 
 falcon:
+ifeq ($(SERVER),uwsgi)
+	$(ENV)/bin/uwsgi --ini falcon/uwsgi.ini
+else
+	export PYTHONPATH=$$PYTHONPATH:falcon ; \
+	$(ENV)/bin/gunicorn -b 0.0.0.0:8080 -w 4 app:main
+endif
+
+pylons:
 ifeq ($(SERVER),uwsgi)
 	$(ENV)/bin/uwsgi --ini falcon/uwsgi.ini
 else

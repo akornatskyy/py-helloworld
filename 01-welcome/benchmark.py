@@ -54,7 +54,7 @@ environ = {
 }
 
 frameworks = ['bottle', 'falcon', 'pyramid', 'wheezy.web', 'wsgi']
-frameworks += ['bobo', 'django', 'flask', 'tornado']
+frameworks += ['bobo', 'django', 'flask', 'pylons', 'tornado']
 #frameworks = ['cherrypy', 'circuits', 'web.py', 'web2py']
 frameworks = sorted(frameworks)
 
@@ -71,6 +71,7 @@ def run(number=100000):
         os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
+
             f = lambda: list(main(environ.copy(), start_response))
             time = timeit(f, number=number)
             st = Stats(profile.Profile().runctx(
