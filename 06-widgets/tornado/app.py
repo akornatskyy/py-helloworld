@@ -11,7 +11,7 @@ from tornado.util import ObjectDict
 def main(name):
     loader = Loader(root_directory=name)
     template = loader.load('welcome.html')
-    modules = {'_modules': ObjectDict([
+    modules = {'_tt_modules': ObjectDict([
         ('greeting', uimodules.Greeting(loader)),
         ('greetings', uimodules.Greetings(loader))
     ])}
