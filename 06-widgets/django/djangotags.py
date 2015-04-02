@@ -45,4 +45,4 @@ def register_tags():
     lib = Library()
     lib.tag('greeting', build_tag(GreetingNode))
     lib.tag('greetings', build_tag(GreetingsNode))
-    template.builtins.append(lib)
+    template.base.builtins.append(lib)
