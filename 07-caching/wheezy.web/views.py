@@ -9,7 +9,7 @@ from wheezy.web.handlers import BaseHandler
 from wheezy.web.transforms import handler_transforms
 
 
-hello = ntob(''.join(['%s. Hello World! ' % i for i in xrange(500)]),
+hello = ntob(''.join(['%s. Hello World! ' % i for i in range(500)]),
              'utf8')
 
 
@@ -32,14 +32,19 @@ class MemoryHandler(BaseHandler):
         return response
 
 
-class PylibmcHandler(BaseHandler):
+if config.pylibmc_profile:
+    class PylibmcHandler(BaseHandler):
 
-    @handler_cache(config.pylibmc_profile)
-    @handler_transforms(gzip_transform(compress_level=6))
-    def get(self):
-        response = HTTPResponse()
-        response.write_bytes(hello)
-        return response
+        @handler_cache(config.pylibmc_profile)
+        @handler_transforms(gzip_transform(compress_level=6))
+        def get(self):
+            response = HTTPResponse()
+            response.write_bytes(hello)
+            return response
+else:
+    class PylibmcHandler(BaseHandler):
+        def get(self):
+            raise ImportError()
 
 
 class MemcacheHandler(BaseHandler):

@@ -11,17 +11,19 @@ def main(name):
     for m in modules:
         del sys.modules[m]
 
+    import django
     from django.conf import settings
     from django.template import Context
     from django.template import loader
 
     settings.configure(
-        TEMPLATE_DIRS=[name],
-        TEMPLATE_LOADERS=(
-            ('django.template.loaders.cached.Loader', (
-                'django.template.loaders.filesystem.Loader',
-            )),
-        )
+        TEMPLATES = [
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'DIRS': [name]
+            }
+        ]
     )
+    django.setup()
     template = loader.get_template('welcome.html')
-    return lambda ctx: template.render(Context(ctx))
+    return lambda ctx: template.render(ctx)

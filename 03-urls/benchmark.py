@@ -11,33 +11,35 @@ except ImportError:
     import profile
 
 from pstats import Stats
-from timeit import timeit
+from timeit import timeit, repeat
 
 from samples import environ
 
 
-path = os.getcwd()
+path = os.path.join(os.getcwd(), os.path.dirname( __file__))
 
-frameworks = ['pylons', 'pyramid', 'wheezy.web']
-frameworks += ['django', 'flask', 'tornado']
+frameworks = ['pyramid', 'wheezy.web']
+frameworks += ['django', 'flask']
 frameworks = sorted(frameworks)
 
 
 def start_response(status, headers):
+    # assert status == '200 OK'
     return None
 
 
 def run(name, wrapper, number=10000):
     sys.path[0] = '.'
-    print("\n%-11s   msec    rps  tcalls  funcs" % name)
+    print("\n%-11s   msec      rps  tcalls  funcs" % name)
     for framework in frameworks:
         os.chdir(os.path.join(path, framework))
         try:
             main = __import__('app', None, None, ['main']).main
             f = lambda: wrapper(main)
-            time = timeit(f, number=number)
+            # time = timeit(f, number=number)
+            time = min(repeat(f, number=number))
             st = Stats(profile.Profile().runctx('f()', globals(), locals()))
-            print("%-11s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
+            print("%-11s %6.0f %8.0f %7d %6d" % (framework, 1000 * time,
                   number / time, st.total_calls, len(st.stats)))
             if 0:
                 st = Stats(profile.Profile().runctx(

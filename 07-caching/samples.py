@@ -5,7 +5,7 @@ environ = {
     'HTTP_ACCEPT_CHARSET': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
     'HTTP_ACCEPT_LANGUAGE': 'uk,en-US;q=0.8,en;q=0.6',
     'HTTP_CONNECTION': 'keep-alive',
-    'HTTP_HOST': 'vm0.dev.local:8080',
+    'HTTP_HOST': '127.0.0.1:8080',
     'HTTP_USER_AGENT': 'Mozilla/5.0 (X11; Linux i686)',
     'QUERY_STRING': '',
     'REMOTE_ADDR': '127.0.0.1',

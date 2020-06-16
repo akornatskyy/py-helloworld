@@ -1,11 +1,13 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
+
+from .views import welcome
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^welcome$', 'helloworld.views.welcome', name='welcome')
+urlpatterns = [
+    url(r'^welcome$', welcome, name='welcome')
     # Examples:
     # url(r'^$', 'helloworld.views.home', name='home'),
     # url(r'^helloworld/', include('helloworld.foo.urls')),
@@ -15,4 +17,4 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-)
+]

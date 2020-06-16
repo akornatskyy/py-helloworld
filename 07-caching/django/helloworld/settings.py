@@ -154,19 +154,31 @@ LOGGING = {
     }
 }
 
+memcached_host = os.environ.get('MEMCACHED_HOST', '127.0.0.1')
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
     },
     'memory': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     },
     'memcache': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
+        'LOCATION': memcached_host
     },
-    'pylibmc': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': '/tmp/memcached.sock',
-    }
+
 }
+
+try:
+    import pylibmc
+except ImportError:
+    pass
+else:
+    CACHES['pylibmc'] = {
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': memcached_host
+    }
+
+ALLOWED_HOSTS = ['127.0.0.1']

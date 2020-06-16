@@ -21,4 +21,4 @@ for f in features:
     main.add_route('/{locale}/%s' % f, Welcome())
 
 for f in features:
-    main.add_route('/{user}/{repo}/%s' % f, Welcome())
+    main.add_route('/{locale}/{repo}/%s' % f, Welcome())

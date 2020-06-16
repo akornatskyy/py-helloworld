@@ -11,19 +11,19 @@ except ImportError:
     import profile
 
 from pstats import Stats
-from timeit import timeit
+from timeit import timeit, repeat
 
 
-path = os.getcwd()
+path = os.path.join(os.getcwd(), os.path.dirname( __file__))
 
-frameworks = ['django', 'jinja2', 'tenjin', 'tornado', 'wheezy.template']
-#frameworks += ['mako']
+frameworks = ['django', 'jinja2', 'tornado', 'wheezy.template']
+frameworks += ['mako']
 frameworks = sorted(frameworks)
 
 
-def run(name, ctx, number=100000):
+def run(name, ctx, number=10000):
     sys.path[0] = '.'
-    print("\n%-16s   msec    rps  tcalls  funcs" % name)
+    print("\n%-16s   msec      rps  tcalls  funcs" % name)
     for framework in frameworks:
         os.chdir(os.path.join(path, framework))
         if not os.path.exists(name):
@@ -33,10 +33,10 @@ def run(name, ctx, number=100000):
             main = __import__('app', None, None, ['main']).main
             render = main(name)
             f = lambda: render(ctx)
-            f()  # warm up first call
-            time = timeit(f, number=number)
+            # time = timeit(f, number=number)
+            time = min(repeat(f, number=number))
             st = Stats(profile.Profile().runctx('f()', globals(), locals()))
-            print("%-16s %6.0f %6.0f %7d %6d" % (framework, 1000 * time,
+            print("%-16s %6.0f %8.0f %7d %6d" % (framework, 1000 * time,
                   number / time, st.total_calls, len(st.stats)))
             if 0:
                 st = Stats(profile.Profile().runctx(

@@ -3,11 +3,12 @@
 """
 
 from django import template
-from django.template import Context
+# from django.template import Context
 from django.template import Library
 from django.template import Node
 from django.template import Variable
 from django.template import loader
+# from django.template.defaulttags import register
 
 
 class GreetingNode(Node):
@@ -17,9 +18,9 @@ class GreetingNode(Node):
         self.template = loader.get_template('tags/greeting.html')
 
     def render(self, context):
-        return self.template.render(Context({
+        return self.template.render({
             'name': self.name.resolve(context)
-        }))
+        })
 
 
 class GreetingsNode(Node):
@@ -29,20 +30,18 @@ class GreetingsNode(Node):
         self.template = loader.get_template('tags/greetings.html')
 
     def render(self, context):
-        return self.template.render(Context({
+        return self.template.render({
             'names': self.names.resolve(context)
-        }))
+        })
 
 
 def build_tag(node_class):
     def tag(parser, token):
-        tag_name, name = token.split_contents()
+        _, name = token.split_contents()
         return node_class(name)
     return tag
 
 
-def register_tags():
-    lib = Library()
-    lib.tag('greeting', build_tag(GreetingNode))
-    lib.tag('greetings', build_tag(GreetingsNode))
-    template.base.builtins.append(lib)
+register = template.Library()
+register.tag('greeting', build_tag(GreetingNode))
+register.tag('greetings', build_tag(GreetingsNode))

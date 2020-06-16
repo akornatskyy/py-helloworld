@@ -5,5 +5,5 @@ def welcome(request, **route_args):
     return HttpResponse("Hello World!")
 
 
-def error404(request):
+def error404(request, exception):
     return HttpResponseNotFound()
