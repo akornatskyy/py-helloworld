@@ -1,7 +1,7 @@
 
 import config
 
-from wheezy.core.comp import ntob
+
 from wheezy.http import HTTPResponse
 from wheezy.http.transforms import gzip_transform
 from wheezy.web import handler_cache
@@ -9,8 +9,7 @@ from wheezy.web.handlers import BaseHandler
 from wheezy.web.transforms import handler_transforms
 
 
-hello = ntob(''.join(['%s. Hello World! ' % i for i in range(500)]),
-             'utf8')
+hello = ''.join(['%s. Hello World! ' % i for i in range(500)]).encode('utf8')
 
 
 class WelcomeHandler(BaseHandler):
