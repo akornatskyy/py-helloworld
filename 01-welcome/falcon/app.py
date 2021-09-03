@@ -5,8 +5,8 @@ class Welcome(object):
 
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
-        resp.body = ('Hello World!')
+        resp.text = ('Hello World!')
 
 
-main = falcon.API(media_type='text/plain')
+main = falcon.App(media_type='text/plain')
 main.add_route('/welcome', Welcome())
