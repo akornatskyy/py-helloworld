@@ -1,0 +1,34 @@
+name: benchmark
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"  # At 03:00 on Sunday.
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - python-version: '3.9'
+            TOXENV: py3
+          - python-version: '3.9'
+            TOXENV: py3-cython
+          - python-version: 'pypy-3.7'
+            TOXENV: pypy3
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install tox
+      - env:
+          TOXENV: ${{ matrix.TOXENV }}
+        run: tox
