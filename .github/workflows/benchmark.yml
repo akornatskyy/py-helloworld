@@ -15,9 +15,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - python-version: '3.9'
+          - python-version: '3.10'
             TOXENV: py3
-          - python-version: '3.9'
+          - python-version: '3.10'
             TOXENV: py3-cython
           - python-version: 'pypy-3.7'
             TOXENV: pypy3
