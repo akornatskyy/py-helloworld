@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 from samples import features
 from samples import sections
@@ -10,17 +10,17 @@ from .views import welcome, repo_view, user_view
 # admin.autodiscover()
 
 urlpatterns = [
-    url(r"^welcome$", welcome),
-    url(r"^(?P<user>\w+)$", user_view),
-    url(r"^(?P<user>\w+)/(?P<repo>\w+)$", repo_view, name='repo')
+    re_path(r"^welcome$", welcome),
+    re_path(r"^(?P<user>\w+)$", user_view),
+    re_path(r"^(?P<user>\w+)/(?P<repo>\w+)$", repo_view, name='repo')
 ]
 
 urlpatterns += [
-    url("^%s/%s$" % (s, f), welcome, name='%s-%s' % (s, f))
+    re_path("^%s/%s$" % (s, f), welcome, name='%s-%s' % (s, f))
     for s in sections for f in features
 ]
 
 urlpatterns += [
-    url(r"^(?P<user>\w+)/(?P<repo>\w+)/%s$" % f, welcome, name=f)
+    re_path(r"^(?P<user>\w+)/(?P<repo>\w+)/%s$" % f, welcome, name=f)
     for f in features
 ]

@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 from .views import welcome
 
@@ -7,7 +7,7 @@ from .views import welcome
 # admin.autodiscover()
 
 urlpatterns = [
-    url(r'^welcome$', welcome, name='welcome')
+    re_path(r'^welcome$', welcome, name='welcome')
     # Examples:
     # url(r'^$', 'helloworld.views.home', name='home'),
     # url(r'^helloworld/', include('helloworld.foo.urls')),
