@@ -1,6 +1,6 @@
 # py-helloworld benchmarks
 
-[![Build Status](https://travis-ci.org/akornatskyy/py-helloworld.svg?branch=master)](https://travis-ci.org/akornatskyy/py-helloworld)
+[![benchmark](https://github.com/akornatskyy/py-helloworld/actions/workflows/benchmark.yml/badge.svg)](https://github.com/akornatskyy/py-helloworld/actions/workflows/benchmark.yml)
 
 A collection of various 'Hello World!' examples with [benchmarks](http://mindref.blogspot.com/search/label/benchmark) and ability to profile results.
 
