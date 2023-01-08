@@ -17,12 +17,14 @@ def main(name):
             CoreExtension(token_start='#')
         ]
     )
+    engine.compiler.source_lineno = 0;
     engine = Engine(
         loader=PreprocessLoader(engine),
         extensions=[
             CoreExtension()
         ]
     )
+    engine.compiler.source_lineno = 0;
     engine.global_vars.update({'h': escape})
 
     template = engine.get_template('welcome.html')
