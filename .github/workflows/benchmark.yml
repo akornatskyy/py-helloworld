@@ -19,7 +19,7 @@ jobs:
             TOXENV: py3
           - python-version: '3.11'
             TOXENV: py3-cython
-          - python-version: 'pypy-3.7'
+          - python-version: 'pypy-3.9'
             TOXENV: pypy3
 
     steps:
