@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,11 +18,11 @@ jobs:
             TOXENV: py3
           - python-version: '3.11'
             TOXENV: py3-cython
-          - python-version: 'pypy-3.9'
+          - python-version: 'pypy-3.10'
             TOXENV: pypy3
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:

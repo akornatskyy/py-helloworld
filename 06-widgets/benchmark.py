@@ -1,14 +1,8 @@
+import cProfile as profile
 import os
 import sys
-
-try:
-    import cProfile as profile
-except ImportError:
-    import profile
-
 from pstats import Stats
-from timeit import timeit, repeat
-
+from timeit import repeat, timeit
 
 path = os.path.join(os.getcwd(), os.path.dirname(__file__))
 
@@ -18,12 +12,12 @@ frameworks = sorted(frameworks)
 
 
 def run(name, ctx, number=10000):
-    print("\n%-16s   msec      rps  tcalls  funcs" % name)
+    print("\n%-16s   msec      rps  tcalls  funcs" % name, flush=True)
     for framework in frameworks:
         sys.path[0] = os.path.join(path, framework)
         os.chdir(os.path.join(path, framework))
         if not os.path.exists(name):
-            print("%-22s not available" % framework)
+            print("%-22s not available" % framework, flush=True)
             continue
         try:
             main = __import__("app", None, None, ["main"]).main
@@ -40,7 +34,8 @@ def run(name, ctx, number=10000):
                     number / time,
                     st.total_calls,
                     len(st.stats),
-                )
+                ),
+                flush=True
             )
             if 0:
                 st = Stats(
@@ -51,11 +46,11 @@ def run(name, ctx, number=10000):
                 st.strip_dirs().sort_stats("time").print_stats(10)
             del sys.modules["app"]
         except ImportError:
-            print("%-22s not installed" % framework)
+            print("%-22s not installed" % framework, flush=True)
 
 
 def run_batch(ctx):
-    print("\nlen(names) == %s" % len(ctx["names"]))
+    print("\nlen(names) == %s" % len(ctx["names"]), flush=True)
     run("01-initial", ctx)
     run("02-single", ctx)
     run("03-loop", ctx)

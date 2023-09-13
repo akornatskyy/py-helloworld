@@ -1,26 +1,11 @@
+import cProfile as profile
 import gc
 import importlib
 import os
 import sys
-
-PY3 = sys.version_info[0] >= 3
-if PY3:
-    from io import BytesIO
-
-    ntob = lambda n, encoding: n.encode(encoding)
-else:
-    from cStringIO import StringIO as BytesIO
-
-    ntob = lambda n, encoding: n
-
-try:
-    import cProfile as profile
-except ImportError:
-    import profile
-
+from io import BytesIO
 from pstats import Stats
-from timeit import timeit, repeat
-
+from timeit import repeat, timeit
 
 environ = {
     "HTTP_ACCEPT": "text/html,application/xhtml+xml,application/xml;"
@@ -45,7 +30,7 @@ environ = {
     "uwsgi.version": "1.2.6",
     "wsgi.errors": None,
     "wsgi.file_wrapper": None,
-    "wsgi.input": BytesIO(ntob("", "utf-8")),
+    "wsgi.input": BytesIO(b""),
     "wsgi.multiprocess": False,
     "wsgi.multithread": False,
     "wsgi.run_once": False,
@@ -68,7 +53,7 @@ def start_response(status, headers, exc_info=None):
 
 def run(number=10000):
     path = os.path.dirname(__file__)
-    print("              msec      rps  tcalls  funcs")
+    print("              msec      rps  tcalls  funcs", flush=True)
     for framework in frameworks:
         sys.path[0] = os.path.join(path, framework)
         try:
@@ -85,7 +70,8 @@ def run(number=10000):
                     number / time,
                     st.total_calls,
                     len(st.stats),
-                )
+                ),
+                flush=True
             )
             if 0:
                 st = Stats(
@@ -95,8 +81,8 @@ def run(number=10000):
                 )
                 st.strip_dirs().sort_stats("time").print_stats(10)
             del sys.modules["app"]
-        except ImportError as e:
-            print("%-20s not installed" % framework)
+        except ImportError:
+            print("%-20s not installed" % framework, flush=True)
         modules = [m for m in sys.modules.keys() if m.endswith("helloworld")]
         for m in modules:
             del sys.modules[m]

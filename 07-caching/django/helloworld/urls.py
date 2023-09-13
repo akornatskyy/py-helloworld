@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 from . import views
 
@@ -7,10 +7,10 @@ from . import views
 # admin.autodiscover()
 
 urlpatterns = [
-    url(r'^welcome$', views.welcome, name='welcome'),
-    url(r'^memory$', views.memory, name='memory'),
-    url(r'^pylibmc$', views.pylibmc, name='pylibmc'),
-    url(r'^memcache$', views.memcache, name='memcache'),
+    re_path(r'^welcome$', views.welcome, name='welcome'),
+    re_path(r'^memory$', views.memory, name='memory'),
+    re_path(r'^pylibmc$', views.pylibmc, name='pylibmc'),
+    re_path(r'^memcache$', views.memcache, name='memcache'),
     # Examples:
     # url(r'^$', 'helloworld.views.home', name='home'),
     # url(r'^helloworld/', include('helloworld.foo.urls')),

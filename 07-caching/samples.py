@@ -1,3 +1,4 @@
+from io import BytesIO
 
 environ = {
     'HTTP_ACCEPT': 'text/html,application/xhtml+xml,application/xml;'
@@ -18,7 +19,7 @@ environ = {
     'uwsgi.version': '1.2.6',
     'wsgi.errors': None,
     'wsgi.file_wrapper': None,
-    'wsgi.input': None,
+    'wsgi.input': BytesIO(b""),
     'wsgi.multiprocess': False,
     'wsgi.multithread': False,
     'wsgi.run_once': False,

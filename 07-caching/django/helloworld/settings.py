@@ -165,8 +165,8 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     },
     'memcache': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': memcached_host
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': memcached_host + ':11211'
     },
 
 }

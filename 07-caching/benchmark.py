@@ -1,16 +1,10 @@
+import cProfile as profile
 import os
 import sys
-
-try:
-    import cProfile as profile
-except ImportError:
-    import profile
-
 from pstats import Stats
-from timeit import timeit, repeat
+from timeit import repeat, timeit
 
 from samples import environ
-
 
 path = os.path.join(os.getcwd(), os.path.dirname(__file__))
 
@@ -26,7 +20,7 @@ def start_response(status, headers):
 
 def run(name, wrapper, number=2000):
     path = os.path.dirname(__file__)
-    print("\n%-11s   msec      rps  tcalls  funcs" % name)
+    print("\n%-11s   msec      rps  tcalls  funcs" % name, flush=True)
     for framework in frameworks:
         sys.path[0] = os.path.join(path, framework)
         os.chdir(os.path.join(path, framework))
@@ -46,7 +40,8 @@ def run(name, wrapper, number=2000):
                     number / time,
                     st.total_calls,
                     len(st.stats),
-                )
+                ),
+                flush=True
             )
             if 0:
                 st = Stats(
@@ -57,7 +52,7 @@ def run(name, wrapper, number=2000):
                 st.strip_dirs().sort_stats("time").print_stats(10)
             del sys.modules["app"]
         except ImportError:
-            print("%-15s not installed" % framework)
+            print("%-15s not installed" % framework, flush=True)
 
 
 def build_wrapper(path_info):
@@ -70,7 +65,7 @@ def build_wrapper(path_info):
 
 
 def run_batch(name):
-    print("\n%s" % name)
+    print("\n%s" % name, flush=True)
     run("welcome", build_wrapper("/welcome"))
     run("memory", build_wrapper("/memory"))
     run("pylibmc", build_wrapper("/pylibmc"))
