@@ -13,7 +13,7 @@ frameworks += ["django", "flask"]
 frameworks = sorted(frameworks)
 
 
-def start_response(status, headers):
+def start_response(status, headers, exec_info=None):
     assert status == "200 OK"
     return None
 

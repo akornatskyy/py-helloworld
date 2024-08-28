@@ -46,7 +46,7 @@ frameworks += ["bobo", "django", "flask", "cherrypy"]
 frameworks = sorted(frameworks)
 
 
-def start_response(status, headers, exc_info=None):
+def start_response(status, headers, exec_info=None):
     assert status == "200 OK"
     return None
 
