@@ -2,7 +2,14 @@ import cProfile as profile
 import os
 import sys
 from pstats import Stats
-from timeit import repeat, timeit
+from timeit import repeat
+
+import warnings
+warnings.filterwarnings(
+    "ignore",
+    message="pkg_resources is deprecated as an API",
+    category=UserWarning,
+)
 
 from samples import environ
 

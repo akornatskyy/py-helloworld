@@ -1,11 +1,16 @@
 import cProfile as profile
-import gc
-import importlib
 import os
 import sys
 from io import BytesIO
 from pstats import Stats
-from timeit import repeat, timeit
+from timeit import repeat
+
+import warnings
+warnings.filterwarnings(
+    "ignore",
+    message="pkg_resources is deprecated as an API",
+    category=UserWarning,
+)
 
 environ = {
     "HTTP_ACCEPT": "text/html,application/xhtml+xml,application/xml;"
@@ -40,7 +45,7 @@ environ = {
 
 frameworks = ["bottle", "falcon", "pyramid", "wheezy.web", "wsgi"]
 # slow
-frameworks += ["bobo", "django", "flask", "cherrypy"]
+frameworks += ["bobo", "django", "flask"]
 # very slow
 # frameworks += ["cherrypy"]
 frameworks = sorted(frameworks)
